@@ -13,7 +13,6 @@ jobs:
         with: # 2 アクションの入力パラメータを指定
           host: ${{ secrets.SSH_HOST }} # ホスト名
           username: ${{ secrets.SSH_USERNAME }} # SSH ユーザ名
-          key: ${{ secrets.SSH_PRIVATE_KEY }} # 秘密鍵の内容
           port: ${{ secrets.SSH_PORT }} # ポート番号
           passphrase: ${{ secrets.SSH_PASSPHRASE }} # パスフレーズ
           debug: true
@@ -25,4 +24,5 @@ jobs:
             git pull origin main  
             bundle install   
             bundle exec rails assets:precompile
-            sudo systemctl restart rails_app
+            rm tmp/pids/server.pid
+            bundle exec rails server -b 0.0.0.0 -d
